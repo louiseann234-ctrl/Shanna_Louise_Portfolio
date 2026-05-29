@@ -1,0 +1,593 @@
+/* ==========================================================================
+   1. GLOBAL RESET & DESIGN VARIABLES
+   ========================================================================== */
+:root {
+    --bg-color: #fcfbfa; /* Elegant, premium gallery museum white */
+    --card-bg: #ffffff; /* Pure paper white */
+    --border-color: #111827; /* High-contrast crisp structural lines */
+    --accent-color: #db2777; /* Unified vibrant pink */
+    --accent-glow: rgba(219, 39, 119, 0.15);
+    --text-main: #111827; /* Deep obsidian black */
+    --text-muted: #4b5563; /* Editorial slate gray */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Selection Highlight */
+::selection {
+    background: var(--accent-color);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   2. NAVIGATION BAR (Minimal Stark Layout)
+   ========================================================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 8%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    background: rgba(252, 251, 250, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 2px solid var(--border-color);
+}
+
+    .navbar .logo {
+        display: flex;
+        align-items: center;
+    }
+
+        .navbar .logo a {
+            text-decoration: none;
+        }
+
+.logo-text {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+    .logo-text:hover {
+        color: var(--accent-color);
+    }
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 3rem;
+}
+
+    .nav-links a {
+        color: var(--text-main);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        position: relative;
+        padding-bottom: 4px;
+    }
+
+        /* Architectural bottom line animation */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+/* ==========================================================================
+   3. HERO SECTION (Side-by-Side Split Layout Overhaul)
+   ========================================================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 8% 80px 8%;
+    position: relative;
+    background-image: linear-gradient(to right, rgba(17, 24, 39, 0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(17, 24, 39, 0.03) 1px, transparent 1px);
+    background-size: 100px 100px;
+}
+
+/* Flex container splitting left and right sections evenly */
+.hero-split-container {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr; /* Left side slightly narrower than text side */
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 5;
+}
+
+/* Left Column Styling (Logo Container) */
+.hero-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.brand-logo-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Keeps your teardrop logo safe and structured */
+.teardrop-logo {
+    max-width: 280px;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Right Column Styling (Letters & Content alignment) */
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns all text and buttons to the left */
+    text-align: left;
+}
+
+    .hero-right h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 1.5rem;
+        color: var(--text-main);
+    }
+
+    .hero-right .highlight {
+        color: #e11d48; /* Your beautiful deep pink signature color accent */
+        font-style: italic;
+    }
+
+    .hero-right .hero-lead {
+        color: var(--text-muted);
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+        max-width: 540px; /* Prevents long sentences from stretching too wide */
+    }
+
+/* Button Group Setup */
+.hero-action-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-main {
+    display: inline-block;
+    background-color: #e11d48;
+    color: #ffffff;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 1rem 2.5rem;
+    border: 2px solid var(--border-color);
+    text-decoration: none;
+    box-shadow: 4px 4px 0px var(--border-color);
+    transition: all 0.2s ease;
+}
+
+    .btn-main:hover {
+        transform: translate(-3px, -3px);
+        box-shadow: 7px 7px 0px var(--border-color);
+    }
+
+/* Responsive adjustment for mobile screen sizes */
+@media (max-width: 868px) {
+    .hero-split-container {
+        grid-template-columns: 1fr; /* Stacks vertically back to standard layout on mobile */
+        gap: 2.5rem;
+    }
+
+    .hero-right {
+        align-items: center;
+        text-align: center;
+    }
+
+        .hero-right .hero-lead {
+            margin-left: auto;
+            margin-right: auto;
+        }
+}
+
+/* ==========================================================================
+   4. SKILLS GRID (Stark Interactive Cards)
+   ========================================================================== */
+.skills-section, .portfolio-section, .connect-section {
+    padding: 8rem 8%;
+    border-top: 2px solid var(--border-color);
+}
+
+.section-header {
+    text-align: left; /* Shifted to clean left layout to break ordinary centering patterns */
+    max-width: 800px;
+    margin-bottom: 4rem;
+    position: relative;
+}
+
+    .section-header h2 {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 3rem;
+        font-weight: 400;
+        margin-bottom: 1rem;
+        color: var(--text-main);
+        text-transform: lowercase; /* Artistic subversion */
+    }
+
+        .section-header h2::before {
+            content: '// ';
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+    .section-header p {
+        font-size: 1.1rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 4px 4px 0px var(--border-color);
+    transition: all 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+    .skill-card:hover {
+        transform: translate(-4px, -4px);
+        box-shadow: 8px 8px 0px var(--accent-color);
+        border-color: var(--border-color);
+    }
+
+.skill-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Distinct flat solid pop colors */
+.icon-html {
+    background: #ffebe0;
+    color: #ff5500;
+}
+
+.icon-css {
+    background: #e0f0ff;
+    color: #0077ff;
+}
+
+.icon-js {
+    background: #fffde0;
+    color: #ccaa00;
+}
+
+.icon-python {
+    background: #e0f7ff;
+    color: #205080;
+}
+
+.icon-uiux {
+    background: #ffe0eb;
+    color: #db2777;
+}
+
+.icon-figma {
+    background: #f0e0ff;
+    color: #a259ff;
+}
+
+.icon-wordpress {
+    background: #e0f5ff;
+    color: #207090;
+}
+
+.icon-git {
+    background: #ffe0e0;
+    color: #e04020;
+}
+
+.icon-github {
+    background: #f0f0f0;
+    color: #101010;
+}
+
+.icon-vercel {
+    background: #ffffff;
+    color: #000000;
+}
+
+.icon-qa {
+    background: #e0ffe8;
+    color: #00aa40;
+}
+
+.skill-card h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.25rem;
+}
+
+.skill-sub {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   5. SELECTED PROJECTS SECTION (Asymmetrical Editorial Grid)
+   ========================================================================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 3.5rem;
+    margin-bottom: 4rem;
+}
+
+.card {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: 8px 8px 0px var(--border-color);
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+    /* Dynamic shifting look on hover */
+    .card:hover {
+        transform: translate(-6px, -6px);
+        box-shadow: 14px 14px 0px var(--accent-color);
+    }
+
+.card-img {
+    height: 260px;
+    background-size: cover;
+    background-position: center;
+    border-bottom: 2px solid var(--border-color);
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.card:hover .card-img {
+    filter: grayscale(0%);
+}
+
+.card-info {
+    padding: 2rem;
+}
+
+    .card-info h3 {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        margin-bottom: 0.75rem;
+    }
+
+    .card-info p {
+        color: var(--text-muted);
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+.portfolio-action {
+    display: flex;
+    justify-content: flex-start; /* Aligns clean with left headers */
+}
+
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-main);
+    background: transparent;
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px var(--border-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+    .btn-outline:hover {
+        background: var(--text-main);
+        color: #ffffff;
+        transform: translate(-2px, -2px);
+        box-shadow: 6px 6px 0px var(--accent-color);
+    }
+
+/* ==========================================================================
+   6. SOCIAL FOOTER SECTION
+   ========================================================================== */
+.connect-section {
+    background: var(--card-bg);
+}
+
+    /* Fixes the distance layout from image_e4aa59.png */
+    .connect-section .section-header {
+        margin-bottom: 2.5rem; /* Creates breathing room between text and buttons */
+    }
+
+    .connect-section .social-links {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1.5rem;
+        flex-wrap: wrap; /* Keeps it clean and responsive on smaller screens */
+    }
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border: 2px solid var(--border-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    box-shadow: 4px 4px 0px var(--border-color);
+    transition: all 0.2s ease;
+}
+
+/* Consistent crisp white backgrounds for the brutalist theme */
+.facebook {
+    background-color: #ffffff;
+    color: var(--text-main);
+}
+
+.linkedin {
+    background-color: #ffffff;
+    color: var(--text-main);
+}
+
+.gmail {
+    background-color: #ffffff;
+    color: var(--text-main);
+}
+
+.social-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 7px 7px 0px var(--accent-color);
+}
+
+/* ==========================================================================
+   7. PHOTO OVERLAY LIGHTBOX MODAL
+   ========================================================================== */
+.overlay-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+    .overlay-modal.active {
+        display: flex;
+        opacity: 1;
+    }
+
+.overlay-content {
+    max-width: 80%;
+    max-height: 80vh;
+    border: 3px solid #ffffff;
+    box-shadow: 20px 20px 0px var(--accent-color);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.overlay-modal.active .overlay-content {
+    transform: scale(1);
+}
+
+.overlay-close {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    color: #ffffff;
+    font-size: 3rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+    .overlay-close:hover {
+        color: var(--accent-color);
+    }
+
+/* ==========================================================================
+   8. RESPONSIVE MEDIA ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 992px) {
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 5%;
+    }
+
+    .nav-links {
+        display: none;
+    }
+    /* Dropdown navigation or side draw trigger can go here */
+    .hero-content h1 {
+        font-size: 2.8rem;
+    }
+
+    .hero-logo {
+        width: 160px;
+        height: 160px;
+    }
+
+    .skills-section, .portfolio-section, .connect-section {
+        padding: 5rem 5%;
+    }
+
+    .section-header h2 {
+        font-size: 2.3rem;
+    }
+}
